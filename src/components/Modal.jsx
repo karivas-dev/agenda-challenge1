@@ -1,8 +1,31 @@
 import {Input} from "./Input";
+import {useState} from "react";
 
-export const Modal = ({isModalActive, toggleModal}) => {
+export const Modal = ({isModalActive, toggleModal, allContacts, setAllContacts}) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [defaultImage, setDefaultImage] = useState(2);
+
     if (!isModalActive) {
         return;
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setAllContacts([...allContacts, {
+            id: allContacts.length + 1,
+            firstname: firstName,
+            lastname: lastName,
+            phone: phone,
+            defaultImg: defaultImage,
+        }]);
+
+        setFirstName('');
+        setLastName('');
+        setPhone('');
+        setDefaultImage(2);
+        toggleModal();
     }
 
     return (<>
@@ -27,27 +50,33 @@ export const Modal = ({isModalActive, toggleModal}) => {
                     </button>
                     <div className="px-6 py-6 lg:px-8">
                         <h3 className="mb-12 text-3xl font-semibold text-white">Agregar un contacto nuevo</h3>
-                        <form className="space-y-6" action="#">
-
-                            <Input label={"Nombre"} name={"firstname"} placeholder={"Yosiak"}/>
-                            <Input label={"Apellido"} name={"laststname"} placeholder={"Cotto"}/>
-                            <Input label={"Número de teléfono"} name={"phone"} placeholder={"+503 2858 6426"}/>
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            <Input label={"Nombre"} name={"firstname"} placeholder={"Yosiak"} value={firstName}
+                                   onChange={event => setFirstName(event.target.value)}/>
+                            <Input label={"Apellido"} name={"laststname"} placeholder={"Cotto"} value={lastName}
+                                   onChange={event => setLastName(event.target.value)}/>
+                            <Input label={"Número de teléfono"} name={"phone"} placeholder={"+503 2858 6426"}
+                                   value={phone} onChange={event => setPhone(event.target.value)}/>
 
                             <div className="flex items-center mb-4">
                                 <input id="default-radio-1" type="radio" value="1" name="default-radio"
+                                       checked={defaultImage === 1}
+                                       onChange={event => setDefaultImage(event.target.value)}
                                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"/>
                                 <label htmlFor="default-radio-1"
                                        className="ml-2 text-sm font-medium text-gray-300">Male</label>
                             </div>
 
                             <div className="flex items-center">
-                                <input checked id="default-radio-2" type="radio" value="2" name="default-radio"
+                                <input id="default-radio-2" type="radio" value="2" name="default-radio"
+                                       checked={defaultImage === 2}
+                                       onChange={event => setDefaultImage(event.target.value)}
                                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"/>
                                 <label htmlFor="default-radio-2"
                                        className="ml-2 text-sm font-medium text-gray-300">Female</label>
                             </div>
 
-                            <button type="button"
+                            <button type="submit"
                                     className="w-full text-white bg-gradient-to-r from-teal-400
                                     via-teal-500 to-teal-600 hover:bg-gradient-to-br
                                     focus:ring-4 focus:outline-none focus:ring-teal-800
