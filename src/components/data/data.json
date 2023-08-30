@@ -1,0 +1,23 @@
+[
+  {
+    "id" : 1,
+    "firstname" : "Juan",
+    "lastname" : "López",
+    "phone" : "+503 2466 3254",
+    "isFavorite" : false
+  },
+  {
+    "id" : 2,
+    "firstname" : "Ana",
+    "lastname" : "Hernández",
+    "phone" : "+503 3964 8141",
+    "isFavorite" : true
+  },
+  {
+    "id" : 3,
+    "firstname" : "Ernesto",
+    "lastname" : "Zepeda",
+    "phone" : "+503 4436 3774",
+    "isFavorite" : false
+  }
+]
